@@ -1,0 +1,129 @@
+[
+  {
+    "model": "commission_app.vendedor",
+    "pk": 1,
+    "fields": {
+      "nombre": "Perico P",
+      "fecha_creacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.vendedor",
+    "pk": 2,
+    "fields": {
+      "nombre": "Zoila B",
+      "fecha_creacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.vendedor",
+    "pk": 3,
+    "fields": {
+      "nombre": "Aquiles C",
+      "fecha_creacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.vendedor",
+    "pk": 4,
+    "fields": {
+      "nombre": "Johny M",
+      "fecha_creacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.regla",
+    "pk": 1,
+    "fields": {
+      "porcentaje": "0.0600",
+      "monto_minimo": "600.00",
+      "activa": true,
+      "fecha_creacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.regla",
+    "pk": 2,
+    "fields": {
+      "porcentaje": "0.0800",
+      "monto_minimo": "500.00",
+      "activa": true,
+      "fecha_creacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.regla",
+    "pk": 3,
+    "fields": {
+      "porcentaje": "0.1000",
+      "monto_minimo": "800.00",
+      "activa": true,
+      "fecha_creacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.regla",
+    "pk": 4,
+    "fields": {
+      "porcentaje": "1.1500",
+      "monto_minimo": "1000.00",
+      "activa": true,
+      "fecha_creacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.venta",
+    "pk": 1,
+    "fields": {
+      "vendedor": 1,
+      "fecha_venta": "2025-05-21",
+      "monto": "400.00",
+      "fecha_creacion": "2025-06-21T10:00:00Z",
+      "fecha_modificacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.venta",
+    "pk": 2,
+    "fields": {
+      "vendedor": 2,
+      "fecha_venta": "2025-05-29",
+      "monto": "600.00",
+      "fecha_creacion": "2025-06-21T10:00:00Z",
+      "fecha_modificacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.venta",
+    "pk": 3,
+    "fields": {
+      "vendedor": 2,
+      "fecha_venta": "2025-06-03",
+      "monto": "200.00",
+      "fecha_creacion": "2025-06-21T10:00:00Z",
+      "fecha_modificacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.venta",
+    "pk": 4,
+    "fields": {
+      "vendedor": 1,
+      "fecha_venta": "2025-06-09",
+      "monto": "300.00",
+      "fecha_creacion": "2025-06-21T10:00:00Z",
+      "fecha_modificacion": "2025-06-21T10:00:00Z"
+    }
+  },
+  {
+    "model": "commission_app.venta",
+    "pk": 5,
+    "fields": {
+      "vendedor": 3,
+      "fecha_venta": "2025-06-11",
+      "monto": "900.00",
+      "fecha_creacion": "2025-06-21T10:00:00Z",
+      "fecha_modificacion": "2025-06-21T10:00:00Z"
+    }
+  }
+]
