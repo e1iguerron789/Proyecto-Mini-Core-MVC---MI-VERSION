@@ -98,7 +98,7 @@ class ComisionCalculadaViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class CalcularComisionesView(APIView):
-    """Vista para calcular comisiones por rango de fechas"""
+    """Vista para calcular comisiones por rango de fechas con detalles individuales"""
     
     def post(self, request):
         serializer = CalcularComisionesSerializer(data=request.data)
@@ -113,7 +113,7 @@ class CalcularComisionesView(APIView):
         ventas = Venta.objects.filter(
             fecha_venta__gte=fecha_inicio,
             fecha_venta__lte=fecha_fin
-        ).select_related('vendedor').order_by('vendedor__nombre', '-fecha_venta')
+        ).select_related('vendedor').order_by('vendedor__nombre', 'fecha_venta')
         
         # Calcular comisiones por vendedor
         vendedores_comisiones = {}
@@ -128,7 +128,8 @@ class CalcularComisionesView(APIView):
                     'total_ventas': 0,
                     'total_monto_ventas': Decimal('0.00'),
                     'total_comisiones': Decimal('0.00'),
-                    'ventas_detalle': []
+                    'ventas_detalle': [],
+                    'comisiones_individuales': []  # ← CAMPO AGREGADO
                 }
             
             # Calcular comisión para esta venta
@@ -139,7 +140,7 @@ class CalcularComisionesView(APIView):
             vendedores_comisiones[vendedor_nombre]['total_monto_ventas'] += venta.monto
             vendedores_comisiones[vendedor_nombre]['total_comisiones'] += comision_data['comision']
             
-            # Agregar detalle de la venta
+            # Agregar detalle de la venta (formato existente)
             vendedores_comisiones[vendedor_nombre]['ventas_detalle'].append({
                 'venta_id': venta.id,
                 'fecha': venta.fecha_venta,
@@ -147,6 +148,19 @@ class CalcularComisionesView(APIView):
                 'comision': comision_data['comision'],
                 'porcentaje': comision_data['porcentaje'],
                 'regla_aplicada': comision_data['regla_aplicada'].id if comision_data['regla_aplicada'] else None
+            })
+            
+            # ← AGREGAR COMISIÓN INDIVIDUAL (NUEVO)
+            vendedores_comisiones[vendedor_nombre]['comisiones_individuales'].append({
+                'id': venta.id,
+                'fecha': venta.fecha_venta.strftime('%d/%m/%Y'),
+                'monto_venta': float(venta.monto),
+                'porcentaje_aplicado': float(comision_data['porcentaje']),
+                'monto_comision': float(comision_data['comision']),
+                'regla_aplicada': {
+                    'id': comision_data['regla_aplicada'].id if comision_data['regla_aplicada'] else None,
+                    'descripcion': f"{float(comision_data['porcentaje']) * 100:.2f}% - Min: ${comision_data['regla_aplicada'].monto_minimo}" if comision_data['regla_aplicada'] else "Sin regla aplicable"
+                }
             })
         
         # Calcular porcentaje promedio para cada vendedor
@@ -158,10 +172,11 @@ class CalcularComisionesView(APIView):
             else:
                 vendedor_data['porcentaje_promedio'] = Decimal('0.0000')
         
-        # Convertir a lista y ordenar
+        # Convertir a lista y ordenar por total de comisiones
         resultado = list(vendedores_comisiones.values())
         resultado.sort(key=lambda x: x['total_comisiones'], reverse=True)
         
+        # ← RESPUESTA COMPLETA CON PERÍODO INFO
         return Response({
             'fecha_inicio': fecha_inicio,
             'fecha_fin': fecha_fin,
@@ -169,6 +184,11 @@ class CalcularComisionesView(APIView):
             'total_ventas': sum(v['total_ventas'] for v in resultado),
             'total_monto_ventas': sum(v['total_monto_ventas'] for v in resultado),
             'total_comisiones': sum(v['total_comisiones'] for v in resultado),
+            'periodo_info': {
+                'dias_total': (fecha_fin - fecha_inicio).days + 1,
+                'fecha_inicio_formateada': fecha_inicio.strftime('%d/%m/%Y'),
+                'fecha_fin_formateada': fecha_fin.strftime('%d/%m/%Y')
+            },
             'vendedores': resultado
         })
 
