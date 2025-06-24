@@ -123,9 +123,8 @@ El servidor estará disponible en **http://127.0.0.1:8000/**
 
 ### 📊 **Gestión de Ventas:**
 
-1. **Agregar Vendedores:** Crear, editar y eliminar vendedores con nombre único.
-2. **Registrar Ventas:** Agregar ventas asociando vendedor, fecha y monto.
-3. **Visualizar Comisiones:** Ver automáticamente la comisión calculada para cada venta.
+1. **Registrar Ventas:** Agregar ventas asociando vendedor, fecha y monto.
+2. **Visualizar Comisiones:** Ver automáticamente la comisión calculada para cada venta.
 
 ### 📈 **Cálculo de Comisiones:**
 
