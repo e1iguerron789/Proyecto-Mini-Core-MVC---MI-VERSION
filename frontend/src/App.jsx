@@ -138,7 +138,7 @@ function App() {
         <header className="app-header">
           <div className="d-flex justify-between align-center">
             <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 600 }}>
-              📊 Sistema de Comisiones
+              Sistema de Comisiones - Proyecto Mini Core
             </h1>
             <nav className="nav">
               <button 
