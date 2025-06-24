@@ -1,4 +1,3 @@
-// src/utils/dateUtils.js
 import { format, parseISO, isValid } from 'date-fns';
 import { es } from 'date-fns/locale';
 

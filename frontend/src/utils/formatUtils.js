@@ -1,5 +1,3 @@
-// src/utils/formatUtils.js
-
 export const formatCurrency = (amount, currency = 'USD') => {
   if (isNaN(amount) || amount === null || amount === undefined) return '$0.00';
   

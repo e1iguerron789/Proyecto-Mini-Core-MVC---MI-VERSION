@@ -1,4 +1,3 @@
-// src/App.jsx - Con dropdown expandible como tu ejemplo
 import { useState, useEffect } from 'react'
 import './App.css'
 import commissionService from './services/commissionService'
@@ -6,12 +5,9 @@ import { formatCurrency, formatPercentage } from './utils/formatUtils'
 import { formatDate, formatDateForAPI, getCurrentMonthRange, toInputDate } from './utils/dateUtils'
 
 function App() {
-  // Estados
   const [activeTab, setActiveTab] = useState('ventas')
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState({ type: '', text: '' })
-  
-  // Estados para ventas
   const [ventas, setVentas] = useState([])
   const [vendedores, setVendedores] = useState([])
   const [nuevaVenta, setNuevaVenta] = useState({
@@ -20,17 +16,13 @@ function App() {
     monto: ''
   })
   
-  // Estados para comisiones
   const [fechaInicio, setFechaInicio] = useState('')
   const [fechaFin, setFechaFin] = useState('')
   const [comisiones, setComisiones] = useState(null)
   const [expandedVendedores, setExpandedVendedores] = useState(new Set()) // Para múltiples vendedores expandidos
   
-  // Cargar datos iniciales
   useEffect(() => {
     cargarDatos()
-    
-    // Establecer rango del mes actual por defecto
     const rangoMes = getCurrentMonthRange()
     setFechaInicio(rangoMes.start)
     setFechaFin(rangoMes.end)
@@ -56,8 +48,7 @@ function App() {
     setMessage({ type, text })
     setTimeout(() => setMessage({ type: '', text: '' }), 5000)
   }
-  
-  // Manejar creación de venta
+
   const handleSubmitVenta = async (e) => {
     e.preventDefault()
     
@@ -84,7 +75,6 @@ function App() {
     }
   }
   
-  // Eliminar venta
   const eliminarVenta = async (id) => {
     if (!confirm('¿Estás seguro de eliminar esta venta?')) return
     
@@ -100,7 +90,6 @@ function App() {
     }
   }
   
-  // Calcular comisiones
   const calcularComisiones = async () => {
     if (!fechaInicio || !fechaFin) {
       showMessage('warning', 'Por favor selecciona un rango de fechas')
@@ -120,7 +109,6 @@ function App() {
     }
   }
 
-  // Toggle para expandir/contraer vendedor específico
   const toggleVendedorDropdown = (vendedorId) => {
     const newExpanded = new Set(expandedVendedores)
     if (newExpanded.has(vendedorId)) {

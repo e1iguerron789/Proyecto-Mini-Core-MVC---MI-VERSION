@@ -73,7 +73,6 @@ class Venta(models.Model):
     
     def calcular_comision(self):
         """Calcula la comisión para esta venta basada en las reglas"""
-        # Obtener reglas activas ordenadas por monto mínimo descendente
         reglas = Regla.objects.filter(activa=True).order_by('-monto_minimo')
         
         for regla in reglas:
@@ -85,7 +84,6 @@ class Venta(models.Model):
                     'porcentaje': regla.porcentaje
                 }
         
-        # Si no se encuentra ninguna regla aplicable
         return {
             'comision': Decimal('0.00'),
             'regla_aplicada': None,

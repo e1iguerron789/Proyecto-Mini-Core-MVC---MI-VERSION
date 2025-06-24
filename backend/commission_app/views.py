@@ -73,13 +73,10 @@ class VentaViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         queryset = Venta.objects.all()
-        
-        # Filtrar por vendedor si se proporciona
         vendedor_id = self.request.query_params.get('vendedor', None)
         if vendedor_id is not None:
             queryset = queryset.filter(vendedor__id=vendedor_id)
-        
-        # Filtrar por rango de fechas
+    
         fecha_inicio = self.request.query_params.get('fecha_inicio', None)
         fecha_fin = self.request.query_params.get('fecha_fin', None)
         
@@ -108,14 +105,11 @@ class CalcularComisionesView(APIView):
         
         fecha_inicio = serializer.validated_data['fecha_inicio']
         fecha_fin = serializer.validated_data['fecha_fin']
-        
-        # Obtener ventas en el rango de fechas
         ventas = Venta.objects.filter(
             fecha_venta__gte=fecha_inicio,
             fecha_venta__lte=fecha_fin
         ).select_related('vendedor').order_by('vendedor__nombre', 'fecha_venta')
         
-        # Calcular comisiones por vendedor
         vendedores_comisiones = {}
         
         for venta in ventas:
@@ -129,18 +123,14 @@ class CalcularComisionesView(APIView):
                     'total_monto_ventas': Decimal('0.00'),
                     'total_comisiones': Decimal('0.00'),
                     'ventas_detalle': [],
-                    'comisiones_individuales': []  # ← CAMPO AGREGADO
+                    'comisiones_individuales': []
                 }
             
-            # Calcular comisión para esta venta
             comision_data = venta.calcular_comision()
-            
-            # Agregar a los totales
+        
             vendedores_comisiones[vendedor_nombre]['total_ventas'] += 1
             vendedores_comisiones[vendedor_nombre]['total_monto_ventas'] += venta.monto
             vendedores_comisiones[vendedor_nombre]['total_comisiones'] += comision_data['comision']
-            
-            # Agregar detalle de la venta (formato existente)
             vendedores_comisiones[vendedor_nombre]['ventas_detalle'].append({
                 'venta_id': venta.id,
                 'fecha': venta.fecha_venta,
@@ -150,7 +140,6 @@ class CalcularComisionesView(APIView):
                 'regla_aplicada': comision_data['regla_aplicada'].id if comision_data['regla_aplicada'] else None
             })
             
-            # ← AGREGAR COMISIÓN INDIVIDUAL (NUEVO)
             vendedores_comisiones[vendedor_nombre]['comisiones_individuales'].append({
                 'id': venta.id,
                 'fecha': venta.fecha_venta.strftime('%d/%m/%Y'),
@@ -163,7 +152,6 @@ class CalcularComisionesView(APIView):
                 }
             })
         
-        # Calcular porcentaje promedio para cada vendedor
         for vendedor_data in vendedores_comisiones.values():
             if vendedor_data['total_monto_ventas'] > 0:
                 vendedor_data['porcentaje_promedio'] = (
@@ -172,11 +160,9 @@ class CalcularComisionesView(APIView):
             else:
                 vendedor_data['porcentaje_promedio'] = Decimal('0.0000')
         
-        # Convertir a lista y ordenar por total de comisiones
         resultado = list(vendedores_comisiones.values())
         resultado.sort(key=lambda x: x['total_comisiones'], reverse=True)
         
-        # ← RESPUESTA COMPLETA CON PERÍODO INFO
         return Response({
             'fecha_inicio': fecha_inicio,
             'fecha_fin': fecha_fin,
@@ -199,8 +185,6 @@ class ResumenComisionesView(APIView):
     def get(self, request):
         fecha_inicio = request.query_params.get('fecha_inicio')
         fecha_fin = request.query_params.get('fecha_fin')
-        
-        # Filtrar ventas por fecha si se proporcionan
         ventas_query = Venta.objects.all()
         
         if fecha_inicio:
@@ -208,11 +192,9 @@ class ResumenComisionesView(APIView):
         if fecha_fin:
             ventas_query = ventas_query.filter(fecha_venta__lte=fecha_fin)
         
-        # Obtener estadísticas generales
         total_ventas = ventas_query.count()
         total_monto = ventas_query.aggregate(Sum('monto'))['monto__sum'] or Decimal('0.00')
         
-        # Calcular total de comisiones
         total_comisiones = Decimal('0.00')
         for venta in ventas_query:
             comision_data = venta.calcular_comision()

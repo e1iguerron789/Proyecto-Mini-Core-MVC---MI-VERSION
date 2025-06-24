@@ -1,20 +1,16 @@
-// src/services/commissionService.js
 import api from './api';
 
 const commissionService = {
-  // Vendedores
   getVendedores: async () => {
     const response = await api.get('/vendedores/');
     return response.data;
   },
 
-  // Reglas
   getReglas: async () => {
     const response = await api.get('/reglas/');
     return response.data;
   },
 
-  // Ventas
   getVentas: async (params = {}) => {
     const response = await api.get('/ventas/', { params });
     return response.data;
@@ -34,7 +30,6 @@ const commissionService = {
     await api.delete(`/ventas/${id}/`);
   },
 
-  // Calcular comisiones por rango de fechas
   calcularComisiones: async (fechaInicio, fechaFin) => {
     const response = await api.post('/comisiones/calcular/', {
       fecha_inicio: fechaInicio,
@@ -43,7 +38,6 @@ const commissionService = {
     return response.data;
   },
 
-  // Resumen de comisiones
   getResumenComisiones: async (fechaInicio, fechaFin) => {
     const response = await api.get('/comisiones/resumen/', {
       params: {
