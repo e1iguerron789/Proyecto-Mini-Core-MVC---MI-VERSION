@@ -1,6 +1,6 @@
 # Proyecto Mini Core - Aplicación de Gestión de Ventas (React - Django)
 
-Aplicación **CRUD** interconectada de gestión de comisiones que combina la robustez de **Django REST Framework** para exponer una API REST, con un frontend **React + Vite** que consume esos endpoints mediante Axios y ofrece una UI en modo oscuro moderna y responsiva. El stack se despliega en **Render**: el backend corre como **Web Service** (Gunicorn + Django, con migraciones automáticas y archivos estáticos recopilados) y el frontend como **Static Site** generado por Vite, con una regla global de rewrite (/* → /index.html) para permitir el enrutado del SPA.
+Aplicación interconectada de gestión de comisiones que combina la robustez de **Django REST Framework** para exponer una API REST, con un frontend **React + Vite** que consume esos endpoints mediante Axios y ofrece una UI en modo oscuro moderna y responsiva. El stack se despliega en **Render**: el backend corre como **Web Service** (Gunicorn + Django, con migraciones automáticas y archivos estáticos recopilados) y el frontend como **Static Site** generado por Vite, con una regla global de rewrite (/* → /index.html) para permitir el enrutado del SPA.
 
 ---
 
