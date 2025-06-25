@@ -21,8 +21,7 @@ El backend se encuentra construido con **Django** y utiliza **SQLite** en desarr
 ## 🌐 Demo en Vivo
 
 - **🖥️ Aplicación Frontend:** [https://proyecto-mini-core-mvc-static.onrender.com](https://proyecto-mini-core-mvc-static.onrender.com)
-- **🔧 API Backend:** [https://proyecto-mini-core-mvc.onrender.com](https://proyecto-mini-core-mvc.onrender.com)
-
+  
 ---
 
 ## Tabla de Contenidos
