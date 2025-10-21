@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Proyecto Mini Core - Aplicación de Gestión de Ventas (React - Django)
 
 Aplicación interconectada de gestión de comisiones que combina la robustez de **Django REST Framework** para exponer una API REST, con un frontend **React + Vite** que consume esos endpoints mediante Axios y ofrece una UI en modo oscuro moderna y responsiva. El stack se despliega en **Render**: el backend corre como **Web Service** (Gunicorn + Django, con migraciones automáticas y archivos estáticos recopilados) y el frontend como **Static Site** generado por Vite, con una regla global de rewrite (/* → /index.html) para permitir el enrutado del SPA.
@@ -311,3 +312,6 @@ Este proyecto fue desarrollado por:
 ## Licencia
 
 Este proyecto está licenciado bajo la [MIT License](https://choosealicense.com/licenses/mit/). Puedes usar, modificar y distribuir este proyecto libremente.
+=======
+# Proyecto-Mini-Core-MVC---MI-VERSION
+>>>>>>> e3acf272fef326c8543e5084d64685a821eb80ec
